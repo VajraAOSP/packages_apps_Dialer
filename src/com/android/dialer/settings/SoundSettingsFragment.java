@@ -64,6 +64,9 @@ public class SoundSettingsFragment extends PreferenceFragment
 
     private static final int MSG_UPDATE_RINGTONE_SUMMARY = 1;
 
+    private static final String CATEGORY_INCALL_VIBRATION_KEY =
+            "sound_incall_vibration_category_key";
+
     private Preference mRingtonePreference;
     private SwitchPreference mVibrateWhenRinging;
     private SwitchPreference mPlayDtmfTone;
@@ -106,7 +109,10 @@ public class SoundSettingsFragment extends PreferenceFragment
         if (hasVibrator()) {
             mVibrateWhenRinging.setOnPreferenceChangeListener(this);
         } else {
-            getPreferenceScreen().removePreference(mVibrateWhenRinging);
+            PreferenceScreen mPreferenceScreen = getPreferenceScreen();
+            Preference inCallVibration = findPreference(CATEGORY_INCALL_VIBRATION_KEY);
+            mPreferenceScreen.removePreference(mVibrateWhenRinging);
+            mPreferenceScreen.removePreference(inCallVibration);
             mVibrateWhenRinging = null;
         }
 
